@@ -12,7 +12,7 @@ export default function Home({ navigation, route }) {
             if (timeout) clearTimeout(timeout);
             const ts = setTimeout(() => {
                 axios.get(`https://api.github.com/search/users?q=${text}`).then((res) => res.data).then((response) => {
-                    console.log('API Cevabı:', response);
+                    //console.log('API Cevabı:', response);
                     setSearchResults(response.items);
                     setTotalResults(response.total_count);
                 });
