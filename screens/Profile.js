@@ -25,14 +25,14 @@ const Profile = ({ route }) => {
             <View style={styles.repoContainer}>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                     <Image source={renderLanguageImage(item)} style={styles.languageIcon} />
-                    <Text style={styles.repoName}>{item.name}</Text>
+                    <Text style={styles.repoName}>{item.name.length > 30 ? (item.name || "").slice(0, 30) + "..." : item.name}</Text>
                 </View>
                 <Text style={styles.repoDescription}>{item.description}</Text>
                 <View style={{ flexDirection: 'row', alignItems: 'center' }}>
-                <Image source={require('../assets/star.png')} style={styles.starIcon} />
-                <Text style={styles.repoStars}>{item.stargazers_count}</Text>
+                    <Image source={require('../assets/star.png')} style={styles.starIcon} />
+                    <Text style={styles.repoStars}>{item.stargazers_count}</Text>
+                </View>
             </View>
-        </View>
         );
     };
 
@@ -77,18 +77,18 @@ const Profile = ({ route }) => {
                 <Image source={require('../assets/github.png')} style={styles.githubLogo} />
             </View>
             <View style={styles.grayBackground}>
-                <Text style={styles.repositoriesText}>Repositories</Text>
                 <View style={styles.userInfoContainer}>
                     <Image source={{ uri: profile.avatar_url }} style={styles.avatar} />
                     <View style={styles.userInfo}>
-                        <Text style={styles.userName}>@{profile.login}</Text>
-                        <Text style={styles.fullName}>{profile.name}</Text>
-                        <View style={styles.statsContainer}>
-                            <Text style={styles.followersText}>Followers: {profile.followers}</Text>
-                            <Text style={styles.followingText}>Following: {profile.following}</Text>
+                        <Text style={{ color: "white", fontSize: 24, marginTop: 5 }}>{profile.name}</Text>
+                        <Text style={{ color: "white" }}>@{profile.login}</Text>
+                        <View style={{ flexDirection: "row", gap: 20, marginTop: 5 }}>
+                            <Text style={{ color: "white" }}>Followers: <Text style={{ fontWeight: "bold" }}>{profile.followers}</Text></Text>
+                            <Text style={{ color: "white" }}>Following:  <Text style={{ fontWeight: "bold" }}>{profile.following}</Text></Text>
                         </View>
                     </View>
                 </View>
+                <Text style={styles.repositoriesText}>Repositories</Text>
                 <FlatList
                     data={repos}
                     keyExtractor={(item) => item.id.toString()}
@@ -125,19 +125,24 @@ const styles = StyleSheet.create({
         borderRadius: 75,
         zIndex: 1,
         bottom: 250,
+        borderColor: "black",
+        borderWidth: 10,
+        BORDERs
     },
     userInfoContainer: {
         alignItems: 'center',
+        marginTop: "30%"
     },
     userInfo: {
         backgroundColor: 'black',
         padding: 10,
         borderRadius: 10,
-        marginTop: -280,
+        marginTop: -270,
         width: 300,
-        height: 100,
-        flexDirection: 'row',
-        justifyContent: 'space-between',
+        height: 120,
+        flexDirection: 'column',
+        justifyContent: "center",
+        alignItems: "center",
     },
     fullName: {
         color: 'white',
@@ -151,15 +156,13 @@ const styles = StyleSheet.create({
         fontSize: 10,
         color: 'white',
         justifyContent: 'center',
-        left: '145%',
         top: '15%',
     },
     statsContainer: {
         flexDirection: 'row',
         marginTop: '20%',
-        right: '35%',
-        justifyContent: 'space-between', 
-        width: '60%', 
+        justifyContent: 'center',
+        width: '100%',
     },
     followersText: {
         color: 'white',
@@ -176,8 +179,8 @@ const styles = StyleSheet.create({
         fontWeight: 'bold',
         textAlign: 'left',
         marginLeft: 10,
-        marginTop: '20%',
         zIndex: 2,
+        marginVertical:20,
         marginBottom: 5,
     },
     repoContainer: {
@@ -186,9 +189,10 @@ const styles = StyleSheet.create({
         borderBottomColor: '#ccc',
         backgroundColor: 'black',
         borderRadius: 20,
-        marginBottom: 5,
-        paddingVertical: 10, 
-        paddingHorizontal: 20,  
+        marginBottom: 20,
+        paddingVertical: 10,
+        paddingHorizontal: 20,
+        marginHorizontal: 10
     },
     repoName: {
         fontWeight: 'bold',
